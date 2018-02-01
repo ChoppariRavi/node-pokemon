@@ -1,0 +1,33 @@
+
+<div *ngIf="showModal">
+    <app-modal [idx] = "indexVal" (hideModal)="hideModalHandler($event)"></app-modal>
+</div>
+<div class="container card-container">
+  <form class="form-inline" novalidate>
+    <div class="col-md-10">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" [ngStyle]="{'width':'100%'}" #searchIp (change)="searchIpfun($event)">
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-outline-success btn-block" type="submit" (click)="searchPokemon($event, searchIp)">Search</button>
+    </div>
+  </form>
+  <br/>
+  <div class="row">
+    <div class="col-sm-2 text-center" *ngIf="pokemons.length===0">
+        <img src="./assets/images/loader.gif" alt="Loading...">
+    </div>
+    <div class="col-sm-2" *ngFor = "let pokemon of pokemons | pokemonfilter:searchTxt; let idx = index">
+      <div class="card">
+        <div class="card-header">
+          #ID: {{ pokemon.id }}
+        </div>
+        <img class="card-img-top" src="./assets/images/pokemon/{{ idx+1 }}.png" alt="Card image cap">
+        <div class="card-body text-center">
+          {{pokemon.name}}<br/>
+          <a href="javascript:void(0)" class="btn btn-primary btn-sm" (click)="viewDetails(idx)">VIEW</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
